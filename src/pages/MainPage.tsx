@@ -5,11 +5,13 @@ import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import axios from 'axios'
+import { Container } from '@mui/system'
+import Pagination from '@mui/material/Pagination';
 
 const MainPage = () => {
 	const [pokemonData, setPokemonData] = useState([])
 
-	const [currentPageUrl, setCurrentPageUrl] = useState('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20')
+	const [currentPageUrl, setCurrentPageUrl] = useState('https://pokeapi.co/api/v2/pokemon?limit=20')
 	const [nextPageUrl, setNextPageUrl] = useState('')
 	const [prevPageUrl, setPrevPageUrl] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -29,14 +31,13 @@ const MainPage = () => {
 		setNextPageUrl(data.next)
 		setPrevPageUrl(data.previous)
 
-		const createPokemonObj = results => {
-			results.forEach(async pokemon => {
-				const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
-				const data = await res.json()
-				setPokemonData(currentList => [...currentList, data])
-			})
-		}
-		createPokemonObj(data.results)
+		const pokemonPromises = data.results.map(pokemon =>
+			fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
+		)
+
+		const pokemons = await Promise.all(pokemonPromises)
+		setPokemonData(pokemons)
+	
 	}
 
 	useEffect(() => {
@@ -47,19 +48,27 @@ const MainPage = () => {
 		return <p>loading...</p>
 	}
 
+	console.log(pokemonData.map(pokemon => pokemon.sprites))
 
 	return (
-		<ul>
-			{pokemonData.map(pokemon => (
-				<li>
-					<span>#0{pokemon.id} </span>
-					{pokemon.name}
-				</li>
-			))}
-
-			<button onClick={prevPageUrl?prevPage :null }>prev</button>
-			<button onClick={nextPageUrl?nextPage :null}>next</button>
-		</ul>
+		<Container>
+			<Grid container spacing='4'>
+				{pokemonData.map(pokemon => (
+					<Grid key={pokemon.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+						<Card>
+							<CardHeader title={`#${pokemon.id}`} />
+							<CardMedia component='img' width='150' image={pokemon.sprites.front_default} />
+							<CardContent>
+								<Typography variant='h5' component='h2'>{pokemon.name}</Typography>
+						</CardContent>
+						</Card>
+					</Grid>
+				))}
+			</Grid>
+			<Pagination count={10} variant='outlined'/>
+			<button onClick={prevPageUrl ? prevPage : null}>prev</button>
+			<button onClick={nextPageUrl ? nextPage : null}>next</button>
+		</Container>
 	)
 }
 
