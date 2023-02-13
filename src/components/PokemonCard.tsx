@@ -12,7 +12,6 @@ const PokemonCard = pokemon => {
 	const { id, name, types, sprites } = pokemon.pokemon
 
 
-
 	// const [open, setOpen] = useState(false);
 	// const handleOpen = () => {setOpen(true), console.log('open modal');}
 	// const handleClose = () => {setOpen(false),console.log('close modal')};
@@ -22,7 +21,7 @@ const PokemonCard = pokemon => {
 		<Grid key={id} item xs={12} sm={6} md={4} lg={3} xl={2}>
 			<Card >
 				<CardHeader title={`#${id}`} />
-				<BasicModal pokemon = {pokemon}/>
+				<BasicModal pokemon={pokemon.pokemon}/>
 				<CardMedia component='img' width='150' image={sprites.front_default} />
 				<CardContent>
 					<Typography variant='h5' component='h2'>
