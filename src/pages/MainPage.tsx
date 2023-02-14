@@ -5,7 +5,7 @@ import { Container } from '@mui/system'
 
 import PokemonCard from '../components/PokemonCard'
 
-import { Navigate } from 'react-router-dom'
+import Pagination from '../components/Pagination'
 
 const MainPage = () => {
 	const [pokemonData, setPokemonData] = useState([])
@@ -17,8 +17,8 @@ const MainPage = () => {
 	
 	const itemsPerPage = 20
 
-const [page,setPage] = useState(1)
-const [totalPages,setTotalPages] = useState(0)
+	const [totalPages,setTotalPages] = useState(0)
+	const [page,setPage] = useState(1)
 
 
 	const nextPage = () => {
@@ -59,41 +59,20 @@ const [totalPages,setTotalPages] = useState(0)
 	}
 
 
-console.log(totalPages)
 
-// const indexOfLastPoke = currentPage * pokePerPage
-// const indexOfFirstPoke = indexOfLastPoke - pokePerPage
-// const currentPoke = pokemonData.slice(indexOfFirstPoke,indexOfLastPoke)
 
-// console.log(currentPoke)
-
-// const pageNumbers = []
-// const totalPokemons = pokemonData.length
-
-// const paginate = (pageNumber) => {
-// 	setCurrentPage(pageNumber)
-// }
-
-// for(let i=1 ; i<= Math.ceil(totalPokemons/pokePerPage);i++){
-// 	pageNumbers.push(i)
-// }
 
 
 	return (
 		<Container>
-			<button onClick={prevPageUrl ? prevPage : null}>prev</button>
+			<Pagination prevPageUrl={prevPageUrl} nextPageUrl={nextPageUrl} totalPages={totalPages} nextPage={nextPage} prevPage={prevPage} page={page}/>
+			{/* <button onClick={prevPageUrl ? prevPage : null}>prev</button>
 			<button onClick={nextPageUrl ? nextPage : null}>next</button>
-			<p>page {page} of {totalPages}</p>
-{/* <ul>
-	{pageNumbers.map(number => (
-		<li> <a href={`/${number}`} onClick={() => Navigate(`/${number}`)}>{number}</a></li>
-	))}
-</ul> */}
+			<p>page {page} of {totalPages}</p> */}
 
 
 
 			<Grid container spacing='4'>
-				{/* {pokemonData.map(pokemon => ( */}
 				{pokemonData.map(pokemon => (
 					<PokemonCard key={pokemon.id} pokemon={pokemon}/>
 				))}
