@@ -2,7 +2,7 @@ import { useState } from "react"
 
 const Pagination = ({prevPageUrl,prevPage,nextPageUrl,nextPage,page,totalPages}) => {
 	
-console.log(page)
+
 
 	return (
 		<div>
