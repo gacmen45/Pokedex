@@ -12,18 +12,19 @@ const MainPage = () => {
 	const [pokemonData, setPokemonData] = useState([])
 	const [search,setSearch] = useState('')
 
-	const baseUrl = 'https://pokeapi.co/api/v2'
+	// const baseUrl = 'https://pokeapi.co/api/v2'
 	// const itemsPerPage = 20
 	const itemsPerPage = 10
-	const searchingPoke = `pokemon${search}`
+	// const searchingPoke = `pokemon${search}`
 // const limit = `pokemon?limit=${itemsPerPage}`
-const limit = `${searchingPoke}?limit=${itemsPerPage}`
+// const limit = `${searchingPoke}?limit=${itemsPerPage}`
 
 
 //search
 
 	// const [currentPageUrl, setCurrentPageUrl] = useState('https://pokeapi.co/api/v2/pokemon?limit=20')
-	const [currentPageUrl, setCurrentPageUrl] = useState(`${baseUrl}/${limit}`)
+	const [currentPageUrl, setCurrentPageUrl] = useState('https://pokeapi.co/api/v2/pokemon/')
+	// const [currentPageUrl, setCurrentPageUrl] = useState(`${baseUrl}/${limit}`)
 
 	const [nextPageUrl, setNextPageUrl] = useState('')
 	const [prevPageUrl, setPrevPageUrl] = useState('')
@@ -33,13 +34,14 @@ const limit = `${searchingPoke}?limit=${itemsPerPage}`
 	const [totalPages, setTotalPages] = useState(0)
 	const [page, setPage] = useState(1)
 
+const [allPokemons,setAllPokemons] = useState([])
+	const testURL = 'https://pokeapi.co/api/v2/pokemon?limit=10000'
+
 
 
 //search
 const searchHandler = (e) => {
 setSearch(e.target.value)
-console.log(search)
-console.log(currentPageUrl)
 }
 
 
@@ -55,7 +57,9 @@ console.log(currentPageUrl)
 	const fetchPokemons = async () => {
 		setLoading(true)
 		const res = await fetch(currentPageUrl)
+		const res2 = await fetch(testURL)
 		const data = await res.json()
+		const data2 = await res2.json()
 		setLoading(false)
 		setNextPageUrl(data.next)
 		setPrevPageUrl(data.previous)
@@ -67,18 +71,33 @@ console.log(currentPageUrl)
 		const pokemonPromises = data.results.map(pokemon =>
 			fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
 		)
+		const pokemonPromises2 = data2.results.map(pokemon =>
+			fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
+		)
 
 		const pokemons = await Promise.all(pokemonPromises)
+		const allPokemons = await Promise.all(pokemonPromises2)
+		
 		setPokemonData(pokemons)
+		setAllPokemons(allPokemons)
+
+
 	}
 
 	useEffect(() => {
 		fetchPokemons()
-	}, [currentPageUrl])
+	}, [currentPageUrl,])
 
 	if (loading) {
 		return <CircularProgress />
 	}
+
+
+	// console.log(pokemonData.map(pokemon => (pokemon.name.includes('bulbasaur'))))
+console.log(allPokemons.map(pokemon => (pokemon.name.includes(search))))
+
+
+
 
 
 
@@ -100,8 +119,10 @@ console.log(currentPageUrl)
 			/>
 
 			<Grid container spacing='4'>
-				{pokemonData.map(pokemon => (
+				{/* {pokemonData.map(pokemon => ( */}
+				{allPokemons.map(pokemon => ( pokemon.name.includes(search)&&
 					<PokemonCard key={pokemon.id} pokemon={pokemon} />
+					
 				))}
 			</Grid>
 		</Container>
