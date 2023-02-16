@@ -8,72 +8,68 @@ import PokemonCard from '../components/PokemonCard'
 import Pagination from '../components/Pagination'
 
 const MainPage = () => {
-	const [pokemonData, setPokemonData] = useState([])
-	
-	const [currentPageUrl, setCurrentPageUrl] = useState('https://pokeapi.co/api/v2/pokemon?limit=20')
-	const [nextPageUrl, setNextPageUrl] = useState('')
-	const [prevPageUrl, setPrevPageUrl] = useState('')
+	const [pokemons, setPokemons] = useState([])
 	const [loading, setLoading] = useState(false)
-	
-	const itemsPerPage = 20
 
-	const [totalPages,setTotalPages] = useState(0)
-	const [page,setPage] = useState(1)
-
-
-	const nextPage = () => {
-		setCurrentPageUrl(nextPageUrl)
-		setPage(current =>current +1)
+	const searchPokemons = async pokemon => {
+		try {
+			let url = `https://pokeapi.co/api/v2/pokemon.${pokemon}`
+			const response = await fetch(url)
+			return await response.json()
+		} catch (error) {
+			console.log('error: ', error)
+		}
 	}
-	const prevPage = () => {
-		setCurrentPageUrl(prevPageUrl)
-		setPage(current =>current -1)
+
+	const getPokemons = async (limit = 50, offset = 0) => {
+		try {
+			let url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+			const response = await fetch(url)
+			return await response.json()
+		} catch (error) {
+			console.log('error: ', error)
+		}
+	}
+	const getPokemonData = async (url) => {
+		try {
+			const response = await fetch(url)
+			return await response.json()
+		} catch (error) {
+			console.log("error: ", error)
+		}
 	}
 
 	const fetchPokemons = async () => {
-		setLoading(true)
-		const res = await fetch(currentPageUrl)
-		const data = await res.json()
-		setLoading(false)
-		setNextPageUrl(data.next)
-		setPrevPageUrl(data.previous)
+		try {
+			setLoading(true)
+			const data = await getPokemons()
+			const promises = data.results.map(async (pokemon) => {
+				return await getPokemonData(pokemon.url);
+			})
 
-		setTotalPages(Math.ceil(data.count/itemsPerPage))
-
-
-
-		const pokemonPromises = data.results.map(pokemon =>
-			fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
-		)
-
-		const pokemons = await Promise.all(pokemonPromises)
-		setPokemonData(pokemons)
+			const results = await Promise.all(promises);
+			setPokemons(results);
+			setLoading(false)
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	useEffect(() => {
 		fetchPokemons()
-	}, [currentPageUrl])
+	}, [])
 
-	if (loading) {
-		return <CircularProgress />
-	}
-
-
-
-
-
+	console.log(pokemons)
 
 	return (
 		<Container>
-			<Pagination prevPageUrl={prevPageUrl} nextPageUrl={nextPageUrl} totalPages={totalPages} nextPage={nextPage} prevPage={prevPage} page={page}/>
+			{/* <Pagination prevPageUrl={prevPageUrl} nextPageUrl={nextPageUrl} totalPages={totalPages} nextPage={nextPage} prevPage={prevPage} page={page}/> */}
 			{/* <button onClick={prevPageUrl ? prevPage : null}>prev</button>
 			<button onClick={nextPageUrl ? nextPage : null}>next</button>
 			<p>page {page} of {totalPages}</p> */}
 
-
-
 			<Grid container spacing='4'>
-				{pokemonData.map(pokemon => (
+				{pokemons.map(pokemon => (
 					<PokemonCard key={pokemon.id} pokemon={pokemon}/>
 				))}
 			</Grid>
