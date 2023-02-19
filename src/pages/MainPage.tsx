@@ -6,18 +6,22 @@ import CircularProgress from '@mui/material/CircularProgress'
 import PokemonCard from '../components/PokemonCard'
 
 import Pagination from '../components/Pagination'
+import RegionSearchBar from '../components/RegionSearchBar'
 
 const MainPage = () => {
 	const [pokemons, setPokemons] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [inputValue, setInputValue] = useState('')
-	const itemsPerPage = 20
+	// const itemsPerPage = 20
+	const [itemsPerPage, setItemsPerPage] = useState(20)
 
-	const [currentPage, setCurrentPage] = useState(`https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}`)
+	const [currentPage, setCurrentPage] = useState(`https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}&offset=0`)
 	const [nextPageUrl, setNextPageUrl] = useState('')
 	const [prevPageUrl, setPrevPageUrl] = useState('')
 	const [page, setPage] = useState(1)
 	const [totalPages, setTotalPages] = useState(0)
+
+	const [region, setRegion] = useState('')
 
 	const nextPage = () => {
 		setCurrentPage(nextPageUrl)
@@ -26,6 +30,21 @@ const MainPage = () => {
 	const prevPage = () => {
 		setCurrentPage(prevPageUrl)
 		setPage(current => current - 1)
+	}
+
+	//change region
+
+	switch (region) {
+		case 'Kanto':
+			console.log('Kanto')
+			setItemsPerPage(50)
+			break
+		case 'Johto':
+			console.log('Johto')
+			break
+	}
+	const changeValueHandler = e => {
+		setRegion(e.target.value)
 	}
 
 	//fetch pokemon with search button
@@ -41,9 +60,10 @@ const MainPage = () => {
 	}
 
 	//get all pokemos
-	const getPokemons = async (limit = 50, offset = 0) => {
+	const getPokemons = async (limit = 20, offset = 0) => {
 		try {
-			let url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+			// let url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+			// setCurrentPage(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=0`)
 			const response = await fetch(currentPage)
 			return await response.json()
 		} catch (error) {
@@ -120,6 +140,18 @@ const MainPage = () => {
 			</p>
 
 			<Pagination prevPage={prevPage} nextPage={nextPage} />
+
+			{/* <RegionSearchBar /> */}
+			<div>
+				<select name='' id='' onChange={changeValueHandler}>
+					<option value='' disabled>
+						Choose Region
+					</option>
+					<option value='Kanto'>Kanto (1-151)</option>
+
+					<option value='Johto'>Johto (2-152)</option>
+				</select>
+			</div>
 
 			<Grid container spacing='4'>
 				{pokemons.map(pokemon => (

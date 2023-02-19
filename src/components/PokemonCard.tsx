@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
+import { Link } from 'react-router-dom'
 
 import { useState } from 'react'
 
@@ -23,8 +24,9 @@ const PokemonCard = pokemon => {
 	};
 
 
-	return (
-		<Grid key={id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+			return (
+				<Grid key={id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+			
 			<Card>
 				<CardHeader title={`#${id}`} />
 						<PokemonModal pokemon={pokemon.pokemon}/>
@@ -42,7 +44,6 @@ const PokemonCard = pokemon => {
 					</ul>
 				</CardContent>
 			</Card>
-			
 		</Grid>
 	)
 }
