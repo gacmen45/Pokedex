@@ -2,10 +2,23 @@ import { useEffect, useState } from 'react'
 import { Grid, Typography } from '@mui/material/'
 import { Container } from '@mui/system'
 import CircularProgress from '@mui/material/CircularProgress'
-
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
 import PokemonCard from '../components/PokemonCard'
 
 import Pagination from '../components/Pagination'
+
+const container = {
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	padding: '0.5em',
+}
+const searchBar = {
+	display: 'flex',
+}
 
 const MainPage = () => {
 	const [pokemons, setPokemons] = useState([])
@@ -110,16 +123,28 @@ const MainPage = () => {
 	}
 
 	return (
-		<Container>
-			<input onChange={inputValueHandler} type='text' value={inputValue} placeholder='enter pokemon name or id' />
-			<button onClick={searchHandler}>search</button>
-			<button onClick={showAll}>showAll</button>
-
-			<p>
-				page {page} of {totalPages}
-			</p>
-
-			<Pagination prevPage={prevPage} nextPage={nextPage} />
+		<Container sx={{ marginTop: '2em' }}>
+			<Box sx={container}>
+				<Box sx={searchBar}>
+					<TextField
+						id='outlined-basic'
+						label='Search'
+						variant='outlined'
+						onChange={inputValueHandler}
+						type='text'
+						value={inputValue}
+						placeholder='enter name or id'
+					/>
+					
+					<Stack spacing={2} direction='row'>
+						<Button variant='contained' onClick={searchHandler} sx={{marginLeft:'1em'}}>
+							search
+						</Button>
+						<Button variant='contained' onClick={showAll}>show All</Button>
+					</Stack>
+				</Box>
+				<Pagination prevPage={prevPage} nextPage={nextPage} page={page} totalPages={totalPages} />
+			</Box>
 
 			<Grid container spacing='4'>
 				{pokemons.map(pokemon => (
