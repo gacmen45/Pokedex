@@ -1,0 +1,15 @@
+.grass {
+	background-color: #5fbd58;
+}
+
+.fire {
+	background-color: red;
+}
+
+.water {
+	background-color: blue;
+}
+
+.default {
+	background-color: grey;
+}

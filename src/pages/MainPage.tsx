@@ -135,12 +135,14 @@ const MainPage = () => {
 						value={inputValue}
 						placeholder='enter name or id'
 					/>
-					
+
 					<Stack spacing={2} direction='row'>
-						<Button variant='contained' onClick={searchHandler} sx={{marginLeft:'1em'}}>
+						<Button variant='contained' onClick={searchHandler} sx={{ marginLeft: '1em' }}>
 							search
 						</Button>
-						<Button variant='contained' onClick={showAll}>show All</Button>
+						<Button variant='contained' onClick={showAll}>
+							show All
+						</Button>
 					</Stack>
 				</Box>
 				<Pagination prevPage={prevPage} nextPage={nextPage} page={page} totalPages={totalPages} />
