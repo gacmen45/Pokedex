@@ -9,10 +9,10 @@ export const CardWrapper = styled(Card)(({ theme, types }) => {
 				bgColor = '#5FBD58'
 				break
 			case 'fire':
-				bgColor = 'red'
+				bgColor = '#dc872f'
 				break
 			case 'water':
-				bgColor = 'blue'
+				bgColor = '#539DDF'
 				break
 			case 'bug':
 				bgColor = '#92BC2C'
@@ -50,7 +50,7 @@ export const CardWrapper = styled(Card)(({ theme, types }) => {
 			case 'poison':
 				bgColor = '#B763CF'
 				break
-			case 'physic':
+			case 'psychic':
 				bgColor = '#ff2ca8'
 				break
 			case 'rock':
@@ -98,7 +98,7 @@ export const CardWrapper = styled(Card)(({ theme, types }) => {
 					return '#A0A29F'
 				case 'poison':
 					return '#B763CF'
-				case 'physic':
+				case 'psychic':
 					return '#ff2ca8'
 				case 'rock':
 					return '#a38c21'
