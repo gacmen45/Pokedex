@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { AppBar, Toolbar, Container } from '@mui/material'
+import Box from '@mui/material/Box'
 
 const center = {
 	display: 'flex',
@@ -12,6 +13,8 @@ const logo = {
 	width: '150px',
 }
 
+
+
 const RootLayout = () => {
 	return (
 		<>
@@ -20,7 +23,7 @@ const RootLayout = () => {
 					<img width={150} src='https://seeklogo.com/images/P/Pokemon-logo-497D61B223-seeklogo.com.png' alt='' />
 				</Toolbar>
 			</AppBar>
-			<Container>
+			<Container maxWidth={'xl'}>
 				<Outlet />
 			</Container>
 		</>

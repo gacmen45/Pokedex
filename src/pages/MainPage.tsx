@@ -123,7 +123,7 @@ const MainPage = () => {
 	}
 
 	return (
-		<Container sx={{ marginTop: '2em' }}>
+		<div>
 			<Box sx={container}>
 				<Box sx={searchBar}>
 					<TextField
@@ -148,12 +148,12 @@ const MainPage = () => {
 				<Pagination prevPage={prevPage} nextPage={nextPage} page={page} totalPages={totalPages} />
 			</Box>
 
-			<Grid container spacing='4'>
+			<Grid container spacing={3} sx={{marginTop:'1em'}}>
 				{pokemons.map(pokemon => (
 					<PokemonCard key={pokemon.id} pokemon={pokemon} />
 				))}
 			</Grid>
-		</Container>
+			</div>
 	)
 }
 

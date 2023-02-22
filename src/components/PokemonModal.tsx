@@ -30,7 +30,7 @@ function BasicModal(pokemon) {
 
 	return (
 		<div>
-			<Button onClick={handleOpen}><InfoIcon/></Button>
+			<Button onClick={handleOpen}><InfoIcon sx={{color:'white',opacity:'.5'}}/></Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
