@@ -12,9 +12,10 @@ import Pagination from '../components/Pagination'
 
 const container = {
 	display: 'flex',
-	justifyContent: 'space-between',
+	justifyContent: 'space-around',
 	alignItems: 'center',
 	padding: '0.5em',
+	marginTop: '2em',
 }
 const searchBar = {
 	display: 'flex',
@@ -24,7 +25,7 @@ const MainPage = () => {
 	const [pokemons, setPokemons] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [inputValue, setInputValue] = useState('')
-	const itemsPerPage = 20
+	const itemsPerPage = 18
 
 	const [currentPage, setCurrentPage] = useState(`https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}`)
 	const [nextPageUrl, setNextPageUrl] = useState('')
@@ -123,7 +124,7 @@ const MainPage = () => {
 	}
 
 	return (
-		<div>
+		<>
 			<Box sx={container}>
 				<Box sx={searchBar}>
 					<TextField
@@ -148,12 +149,12 @@ const MainPage = () => {
 				<Pagination prevPage={prevPage} nextPage={nextPage} page={page} totalPages={totalPages} />
 			</Box>
 
-			<Grid container spacing={3} sx={{marginTop:'1em'}}>
+			<Grid container spacing={3} direction='row' justifyContent='center' alignItems='center' sx={{ margin: '1em 0 3em 0' }}>
 				{pokemons.map(pokemon => (
 					<PokemonCard key={pokemon.id} pokemon={pokemon} />
 				))}
 			</Grid>
-			</div>
+		</>
 	)
 }
 

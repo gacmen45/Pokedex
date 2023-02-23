@@ -1,7 +1,8 @@
-import React from 'react'
+
 import { Outlet } from 'react-router-dom'
 import { AppBar, Toolbar, Container } from '@mui/material'
-import Box from '@mui/material/Box'
+import Footer from '../components/Footer'
+
 
 const center = {
 	display: 'flex',
@@ -26,6 +27,7 @@ const RootLayout = () => {
 			<Container maxWidth={'xl'}>
 				<Outlet />
 			</Container>
+			<Footer/>
 		</>
 	)
 }
