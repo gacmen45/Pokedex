@@ -2,16 +2,30 @@ import { useEffect, useState } from 'react'
 import { Grid, Typography } from '@mui/material/'
 import { Container } from '@mui/system'
 import CircularProgress from '@mui/material/CircularProgress'
-
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
 import PokemonCard from '../components/PokemonCard'
 
 import Pagination from '../components/Pagination'
+
+const container = {
+	display: 'flex',
+	justifyContent: 'space-around',
+	alignItems: 'center',
+	padding: '0.5em',
+	marginTop: '2em',
+}
+const searchBar = {
+	display: 'flex',
+}
 
 const MainPage = () => {
 	const [pokemons, setPokemons] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [inputValue, setInputValue] = useState('')
-	const itemsPerPage = 20
+	const itemsPerPage = 18
 
 	const [currentPage, setCurrentPage] = useState(`https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}`)
 	const [nextPageUrl, setNextPageUrl] = useState('')
@@ -110,23 +124,37 @@ const MainPage = () => {
 	}
 
 	return (
-		<Container>
-			<input onChange={inputValueHandler} type='text' value={inputValue} placeholder='enter pokemon name or id' />
-			<button onClick={searchHandler}>search</button>
-			<button onClick={showAll}>showAll</button>
+		<>
+			<Box sx={container}>
+				<Box sx={searchBar}>
+					<TextField
+						id='outlined-basic'
+						label='Search'
+						variant='outlined'
+						onChange={inputValueHandler}
+						type='text'
+						value={inputValue}
+						placeholder='enter name or id'
+					/>
 
-			<p>
-				page {page} of {totalPages}
-			</p>
+					<Stack spacing={2} direction='row'>
+						<Button variant='contained' onClick={searchHandler} sx={{ marginLeft: '1em' }}>
+							search
+						</Button>
+						<Button variant='contained' onClick={showAll}>
+							show All
+						</Button>
+					</Stack>
+				</Box>
+				<Pagination prevPage={prevPage} nextPage={nextPage} page={page} totalPages={totalPages} />
+			</Box>
 
-			<Pagination prevPage={prevPage} nextPage={nextPage} />
-
-			<Grid container spacing='4'>
+			<Grid container spacing={3} direction='row' justifyContent='center' alignItems='center' sx={{ margin: '1em 0 3em 0' }}>
 				{pokemons.map(pokemon => (
 					<PokemonCard key={pokemon.id} pokemon={pokemon} />
 				))}
 			</Grid>
-		</Container>
+		</>
 	)
 }
 

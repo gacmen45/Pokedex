@@ -39,7 +39,7 @@ const SinglePokemon = pokemon => {
 			<Box sx={pokeCard}>
 				<Typography variant='h4'>{id}</Typography>
 				<Typography variant='h4'>{name}</Typography>
-				<Box component='img' src={sprites.front_default} sx={{ height: 250 }} />
+				<Box component='img' src={sprites.front_default} width='250' />
 				<ul>
 					{types.map((type, index) => (
 						<li key={index}>
