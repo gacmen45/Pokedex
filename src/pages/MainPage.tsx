@@ -25,7 +25,7 @@ const MainPage = () => {
 	const [pokemons, setPokemons] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [inputValue, setInputValue] = useState('')
-	const itemsPerPage = 18
+	const itemsPerPage = 24
 
 	const [currentPage, setCurrentPage] = useState(`https://pokeapi.co/api/v2/pokemon?limit=${itemsPerPage}`)
 	const [nextPageUrl, setNextPageUrl] = useState('')
