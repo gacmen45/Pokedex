@@ -30,6 +30,7 @@ const SinglePokemon = pokemon => {
 	const newWeight = weight / 10
 
 	const [pokeAbout, setPokeAbout] = useState([])
+	const [pokeDescription, setPokeDescription] = useState('')
 
 	const fetchInfo = async () => {
 		const res = await fetch(species.url)
@@ -37,14 +38,17 @@ const SinglePokemon = pokemon => {
 
 		// console.log(data.flavor_text_entries[0].flavor_text)
 		setPokeAbout(data)
+		setPokeDescription(data.flavor_text_entries[0].flavor_text)
 	}
+
+const hp = pokemon.pokemon.stats[0].base_stat
 
 	useEffect(() => {
 		fetchInfo()
 		// console.log(species.url)
 	}, [species.url])
 
-	console.log(abilities.map(item => item.ability.name))
+	console.log(pokemon.pokemon.stats.map(x => x.stat))
 
 	return (
 		<>
@@ -77,13 +81,30 @@ const SinglePokemon = pokemon => {
 				</Grid>
 				<Grid item xs={12} md={8}>
 					<Box sx={pokeCard}>
-						<Typography variant='h4'>About:</Typography>
-						<Typography variant='h4'>Abilities:</Typography>
-						<ul>
-							{abilities.map(item => (
-								<li>{item.ability.name}</li>
-							))}
-						</ul>
+						<CardWrapper types={types} sx={pokeCard}>
+							<CardHeader title='About:' />
+							<CardContent>{pokeDescription}</CardContent>
+						</CardWrapper>
+						<CardWrapper types={types} sx={pokeCard}>
+							<CardHeader title='Abilities:' />
+							<CardContent>
+								<ul>
+									{abilities.map(item => (
+										<li>{item.ability.name}</li>
+									))}
+								</ul>
+							</CardContent>
+						</CardWrapper>
+						<CardWrapper types={types} sx={pokeCard}>
+							<CardHeader title='BaseStats:' />
+							<CardContent>
+{/* <Typography variant='h6'>HP:{hp}</Typography> */}
+{pokemon.pokemon.stats.map(x => (
+	<Typography variant='h6'>{x.stat.name}: {x.base_stat}</Typography>
+))}
+
+							</CardContent>
+						</CardWrapper>
 					</Box>
 				</Grid>
 			</GridTest>
