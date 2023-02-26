@@ -18,7 +18,7 @@ const pokeCard = {
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
-	padding: '1em',
+	margin: '1em',
 	borderRadius: '20px',
 	filter: 'brightness(130%)',
 }
@@ -36,12 +36,11 @@ const SinglePokemon = pokemon => {
 		const res = await fetch(species.url)
 		const data = await res.json()
 
-		// console.log(data.flavor_text_entries[0].flavor_text)
 		setPokeAbout(data)
 		setPokeDescription(data.flavor_text_entries[0].flavor_text)
 	}
 
-const hp = pokemon.pokemon.stats[0].base_stat
+	const hp = pokemon.pokemon.stats[0].base_stat
 
 	useEffect(() => {
 		fetchInfo()
@@ -52,7 +51,13 @@ const hp = pokemon.pokemon.stats[0].base_stat
 
 	return (
 		<>
-			<GridTest types={types} container sx={{ padding: '1em' }}>
+			<Grid
+				// types={types}
+				container
+				direction='row'
+				justifyContent='center'
+				alignItems='center'
+				sx={{ padding: '1em' }}>
 				<Grid item xs={12} md={4}>
 					<CardWrapper types={types} sx={pokeCard}>
 						<Typography variant='h4'>#{id}</Typography>
@@ -81,14 +86,14 @@ const hp = pokemon.pokemon.stats[0].base_stat
 				</Grid>
 				<Grid item xs={12} md={8}>
 					<Box sx={pokeCard}>
+						<Typography variant='h6'>About:</Typography>
 						<CardWrapper types={types} sx={pokeCard}>
-							<CardHeader title='About:' />
 							<CardContent>{pokeDescription}</CardContent>
 						</CardWrapper>
+						<Typography variant='h6'>Abilities:</Typography>
 						<CardWrapper types={types} sx={pokeCard}>
-							<CardHeader title='Abilities:' />
 							<CardContent>
-								<ul>
+								<ul style={{ display: 'flex' }}>
 									{abilities.map(item => (
 										<li>{item.ability.name}</li>
 									))}
@@ -98,16 +103,16 @@ const hp = pokemon.pokemon.stats[0].base_stat
 						<CardWrapper types={types} sx={pokeCard}>
 							<CardHeader title='BaseStats:' />
 							<CardContent>
-{/* <Typography variant='h6'>HP:{hp}</Typography> */}
-{pokemon.pokemon.stats.map(x => (
-	<Typography variant='h6'>{x.stat.name}: {x.base_stat}</Typography>
-))}
-
+								{pokemon.pokemon.stats.map(x => (
+									<Typography variant='h6'>
+										{x.stat.name}: {x.base_stat}
+									</Typography>
+								))}
 							</CardContent>
 						</CardWrapper>
 					</Box>
 				</Grid>
-			</GridTest>
+			</Grid>
 		</>
 	)
 }

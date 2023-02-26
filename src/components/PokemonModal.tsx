@@ -12,12 +12,15 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: '50%',
-	bgcolor: 'background.paper',
-	border: '2px solid #000',
+	width: '70%',
+	height:'80%',
+	bgcolor: 'beige',
+	borderRadius:'20px',
 	boxShadow: 24,
 	p: 4,
 	display: 'flex',
+	overflow:'auto',
+	padding:'0'
 }
 
 function BasicModal(pokemon) {
