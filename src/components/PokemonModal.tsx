@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal'
 import InfoIcon from '@mui/icons-material/Info';
 
 import SinglePokemon from './SinglePokemon'
+import SinglePokemon2 from './SinglePokemon2';
+
 
 
 const style = {
@@ -12,12 +14,15 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: 600,
-	bgcolor: 'background.paper',
-	border: '2px solid #000',
+	width: '50%',
+	height:'60%',
+	bgcolor: 'beige',
+	borderRadius:'20px',
 	boxShadow: 24,
 	p: 4,
 	display: 'flex',
+	overflow:'auto',
+	padding:'0'
 }
 
 function BasicModal(pokemon) {
@@ -37,7 +42,8 @@ function BasicModal(pokemon) {
 				aria-labelledby='modal-modal-title'
 				aria-describedby='modal-modal-description'>
 				<Box sx={style}>
-					<SinglePokemon pokemon={pokemon.pokemon} />
+					{/* <SinglePokemon pokemon={pokemon.pokemon} /> */}
+					<SinglePokemon2 pokemon={pokemon.pokemon} />
 				</Box>
 			</Modal>
 		</div>
