@@ -17,6 +17,7 @@ import Stack from '@mui/material/Stack'
 const pokeCard = {
 	display: 'flex',
 	flexDirection: 'column',
+	justifyContent:'space-between',
 	alignItems: 'center',
 	margin: '1em',
 	borderRadius: '20px',
@@ -56,10 +57,8 @@ const SinglePokemon = pokemon => {
 				container
 				direction='row'
 				justifyContent='center'
-				alignItems='center'
-				sx={{ padding: '1em' }}>
-				<Grid item xs={12} md={4}>
-					<CardWrapper types={types} sx={pokeCard}>
+				alignItems='center'>
+				<GridTest item xs={12} md={4} types={types} >
 						<Typography variant='h4'>#{id}</Typography>
 						<Typography variant='h4' sx={{ textAlign: 'center', textTransform: 'uppercase', fontWeight: 'bold' }}>
 							{name}
@@ -82,16 +81,16 @@ const SinglePokemon = pokemon => {
 								<Typography variant='h6'>Weight:{newWeight}kg</Typography>
 							</Box>
 						</CardContent>
-					</CardWrapper>
-				</Grid>
-				<Grid item xs={12} md={8}>
+				</GridTest>
+				<Grid item xs={12} md={8} >
+					
 					<Box sx={pokeCard}>
-						<Typography variant='h6'>About:</Typography>
+						{/* <Typography variant='h6'>About:</Typography>
 						<CardWrapper types={types} sx={pokeCard}>
 							<CardContent>{pokeDescription}</CardContent>
-						</CardWrapper>
+						</CardWrapper> */}
 						<Typography variant='h6'>Abilities:</Typography>
-						<CardWrapper types={types} sx={pokeCard}>
+				
 							<CardContent>
 								<ul style={{ display: 'flex' }}>
 									{abilities.map(item => (
@@ -99,8 +98,8 @@ const SinglePokemon = pokemon => {
 									))}
 								</ul>
 							</CardContent>
-						</CardWrapper>
-						<CardWrapper types={types} sx={pokeCard}>
+					
+						
 							<CardHeader title='BaseStats:' />
 							<CardContent>
 								{pokemon.pokemon.stats.map(x => (
@@ -109,7 +108,7 @@ const SinglePokemon = pokemon => {
 									</Typography>
 								))}
 							</CardContent>
-						</CardWrapper>
+				
 					</Box>
 				</Grid>
 			</Grid>
